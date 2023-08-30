@@ -24,12 +24,25 @@ const App = () => {
     setWeekStartDate(getWeekStartDate(new Date()));
   }
 
+    const startOfWeek = getWeekStartDate(new Date(weekStartDate)).toLocaleString('en-us', {month: 'short'});
+    const nextWeekStartDate = new Date(weekStartDate);
+    nextWeekStartDate.setDate(nextWeekStartDate.getDate() + 7);
+    const endOfWeek = nextWeekStartDate.toLocaleString('en-us', {month: 'short'})
+    
+    let monthText = startOfWeek;
+    if(startOfWeek !== endOfWeek) {
+      monthText = `${startOfWeek} - ${endOfWeek}`
+    }
+
+
+
   return (
     <>
       <Header 
         nextWeek={nextWeek} 
         prevWeek={prevWeek} 
         todayHandler={todayHandler}
+        monthText={monthText}
       />
       <Calendar weekDates={weekDates} />
     </>

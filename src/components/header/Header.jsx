@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './header.scss';
 
-const Header = ({ nextWeek, prevWeek, todayHandler }) => {
+const Header = ({ nextWeek, prevWeek, todayHandler, monthText }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -17,7 +17,7 @@ const Header = ({ nextWeek, prevWeek, todayHandler }) => {
         <button className="icon-button navigation__nav-icon" onClick={nextWeek}>
           <i className="fas fa-chevron-right"></i>
         </button>
-        <span className="navigation__displayed-month"></span>
+        <span className="navigation__displayed-month">{monthText}</span>
       </div>
     </header>
   );
