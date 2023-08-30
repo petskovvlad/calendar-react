@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 
 import './modal.scss';
 
-const Modal = () => {
-  const [isOPen, setIsOpen] = useState(false);
-
-  const handleClose = () => {
-    setIsOpen(true);
-  }
+const Modal = ({ closeModal }) => {
     return (
-      <div className={`modal overlay ${isOpen ? 'open' : ''}`}>
+      <div className='modal overlay'>
         <div className="modal__content">
           <div className="create-event">
-            <button className="create-event__close-btn" onClick={handleClose}>+</button>
+            <button className="create-event__close-btn" onClick={closeModal}>+</button>
             <form className="event-form">
               <input
                 type="text"
@@ -26,7 +21,6 @@ const Modal = () => {
                   type="time"
                   name="startTime"
                   className="event-form__field"
-                  onChange={this.handleChange}
                 />
                 <span>-</span>
                 <input

@@ -5,10 +5,21 @@ import Calendar from './components/calendar/Calendar.jsx';
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
 import './common.scss';
+import Modal from './components/modal/Modal.jsx';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(getWeekStartDate(new Date()));
+  const [isOpen, setIsOpen] = useState(false);
+
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+
+  const openModal = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const closeModal = () => {
+    setIsOpen(!isOpen)
+  }
 
   const nextWeek = () => {
     const nextWeekStartDate = new Date(weekStartDate);
@@ -42,8 +53,10 @@ const App = () => {
         nextWeek={nextWeek} 
         prevWeek={prevWeek} 
         todayHandler={todayHandler}
+        openModal={openModal}
         monthText={monthText}
       />
+      {isOpen ? <Modal closeModal={closeModal}/> : ''}
       <Calendar weekDates={weekDates} />
     </>
   );
