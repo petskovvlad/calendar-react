@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './header.scss';
 
-const Header = ({ nextWeek, prevWeek, todayHandler, monthText, openModal }) => {
+const Header = ({ nextWeek, prevWeek, todayHandler, monthText, modalHandler }) => {
 
   return (
     <header className="header">
-      <button className="button create-event-btn" onClick={openModal}>
+      <button className="button create-event-btn" onClick={modalHandler}>
         <i className="fas fa-plus create-event-btn__icon"></i>Create
       </button>
       <div className="navigation">

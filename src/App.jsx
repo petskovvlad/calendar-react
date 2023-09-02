@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 
@@ -13,11 +13,7 @@ const App = () => {
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
-  const openModal = () => {
-    setIsOpen(!isOpen)
-  }
-
-  const closeModal = () => {
+  const modalHandler = () => {
     setIsOpen(!isOpen)
   }
 
@@ -45,18 +41,16 @@ const App = () => {
       monthText = `${startOfWeek} - ${endOfWeek}`
     }
 
-
-
   return (
     <>
       <Header 
         nextWeek={nextWeek} 
         prevWeek={prevWeek} 
         todayHandler={todayHandler}
-        openModal={openModal}
+        modalHandler={modalHandler}
         monthText={monthText}
       />
-      {isOpen ? <Modal closeModal={closeModal}/> : ''}
+      {isOpen ? <Modal modalHandler={modalHandler}/> : ''}
       <Calendar weekDates={weekDates} />
     </>
   );

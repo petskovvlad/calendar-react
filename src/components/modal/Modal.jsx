@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import './modal.scss';
 
-const Modal = ({ closeModal }) => {
+const Modal = ({ modalHandler }) => {
     return (
       <div className='modal overlay'>
         <div className="modal__content">
           <div className="create-event">
-            <button className="create-event__close-btn" onClick={closeModal}>+</button>
+            <button className="create-event__close-btn" onClick={modalHandler}>+</button>
             <form className="event-form">
               <input
                 type="text"
