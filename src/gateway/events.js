@@ -1,18 +1,40 @@
-// const baseUrl = 'https://646cfbcc7b42c06c3b2c6102.mockapi.io/api/v1/users';
+const baseUrl = 'https://646cfbcc7b42c06c3b2c6102.mockapi.io/api/v1/users';
 
-// export async function getEventsData() {
-//     try {
-//       const response = await fetch(baseUrl);
-//       if (!response.ok) {
-//         throw new Error('Ошибка при получении данных');
-//       }
-//       const data = await response.json();
-//       return data;
-//     } catch (error) {
-//       console.error('Ошибка при получении данных:', error);
-//       return [];
-//     }
-//   }
+export async function sendEventsData(data) {
+  try {
+    const response = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при отправке данных');
+    }
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error('Ошибка при отправке данных:', error);
+    throw error;
+  }
+}
+
+export async function getEventsData() {
+    try {
+      const response = await fetch(baseUrl);
+      if (!response.ok) {
+        throw new Error('Ошибка при получении данных');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Ошибка при получении данных:', error);
+      return [];
+    }
+  }
 
 // export async function updateEventsData(eventId, newData) {
 //     try {
@@ -61,8 +83,8 @@ const events = [
     id: 2,
     title: 'Go to the school',
     description: 'hello, 2 am',
-    dateFrom: new Date(2023, 8, 3, 10, 15),
-    dateTo: new Date(2023, 8, 3, 11, 0),
+    dateFrom: new Date(2023, 8, 3, 1, 0),
+    dateTo: new Date(2023, 8, 3, 2, 30),
   },
   {
     id: 3,

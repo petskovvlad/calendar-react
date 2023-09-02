@@ -16,14 +16,10 @@ const Day = ({ dataDay, dayEvents }) => {
           (event) => 
           event.dateFrom.getHours() === hour 
         );
-        console.log(hourEvents)
         
         return (
           <>
           <Hour key={dataDay + hour} dataHour={hour} hourEvents={hourEvents} />
-          {hourEvents.map((event) => (
-            <Event />
-          ))}
           </>
 
         );

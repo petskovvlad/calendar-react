@@ -6,13 +6,43 @@ import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
 import './common.scss';
 import Modal from './components/modal/Modal.jsx';
+import { sendEventsData } from './gateway/events.js';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(getWeekStartDate(new Date()));
   const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    title: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    description: '',
+  });
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
+
+  // считівание формі и сохранение
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  }; 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Здесь вы можете использовать formData для отправки данных или выполнения других действий
+    console.log(formData);
+    // Закройте модальное окно после отправки данных
+    setIsOpen(false);
+
+
+    sendEventsData(formData);
+  };
+
+// ...
   const modalHandler = () => {
     setIsOpen(!isOpen)
   }
@@ -50,7 +80,7 @@ const App = () => {
         modalHandler={modalHandler}
         monthText={monthText}
       />
-      {isOpen ? <Modal modalHandler={modalHandler}/> : ''}
+      {isOpen ? <Modal modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange}/> : ''}
       <Calendar weekDates={weekDates} />
     </>
   );

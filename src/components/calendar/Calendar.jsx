@@ -8,7 +8,6 @@ import './calendar.scss';
 
 const Calendar = ({ weekDates }) => {
   const [currentEvents, setEvents] = useState([events]);
-console.log(currentEvents)
 
   useEffect(() => {
     setEvents(events);
