@@ -6,7 +6,7 @@ import events from '../../gateway/events';
 
 import './calendar.scss';
 
-const Calendar = ({ weekDates }) => {
+const Calendar = ({ weekDates, removeButtonHundler }) => {
   const [currentEvents, setEvents] = useState([events]);
 
   useEffect(() => {
@@ -19,7 +19,10 @@ const Calendar = ({ weekDates }) => {
         <div className="calendar__body">
           <div className="calendar__week-container">
             <Sidebar />
-            <Week weekDates={weekDates} events={currentEvents} />
+            <Week 
+              weekDates={weekDates} 
+              events={currentEvents} 
+              />
           </div>
         </div>
       </section>

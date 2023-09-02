@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 
-import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
+import { getWeekStartDate, generateWeekRange, getDateTime } from '../src/utils/dateUtils.js';
 
 import './common.scss';
 import Modal from './components/modal/Modal.jsx';
-import { sendEventsData } from './gateway/events.js';
+import { getEventsData, sendEventsData } from './gateway/events.js';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(getWeekStartDate(new Date()));
@@ -21,8 +21,6 @@ const App = () => {
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
-
-  // считівание формі и сохранение
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -33,16 +31,10 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Здесь вы можете использовать formData для отправки данных или выполнения других действий
-    console.log(formData);
-    // Закройте модальное окно после отправки данных
-    setIsOpen(false);
-
-
     sendEventsData(formData);
+    setIsOpen(false);
   };
 
-// ...
   const modalHandler = () => {
     setIsOpen(!isOpen)
   }
@@ -81,7 +73,9 @@ const App = () => {
         monthText={monthText}
       />
       {isOpen ? <Modal modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange}/> : ''}
-      <Calendar weekDates={weekDates} />
+      <Calendar 
+        weekDates={weekDates} 
+        />
     </>
   );
 }

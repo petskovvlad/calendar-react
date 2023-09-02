@@ -36,6 +36,21 @@ export async function getEventsData() {
     }
   }
 
+  export async function deleteEventsData(userId) {
+    try {
+      const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Ошибка при удалении данных');
+      }
+      return true; // Успешное удаление
+    } catch (error) {
+      console.error('Ошибка при удалении данных:', error);
+      return false;
+    }
+  }
+
 // export async function updateEventsData(eventId, newData) {
 //     try {
 //       const response = await fetch(`${baseUrl}/${eventId}`, {
@@ -53,21 +68,6 @@ export async function getEventsData() {
 //     } catch (error) {
 //       console.error('Ошибка при обновлении данных:', error);
 //       return null;
-//     }
-//   }
-
-// export async function deleteEventsData(userId) {
-//     try {
-//       const response = await fetch(`${baseUrl}/${userId}`, {
-//         method: 'DELETE',
-//       });
-//       if (!response.ok) {
-//         throw new Error('Ошибка при удалении данных');
-//       }
-//       return true; // Успешное удаление
-//     } catch (error) {
-//       console.error('Ошибка при удалении данных:', error);
-//       return false;
 //     }
 //   }
 
