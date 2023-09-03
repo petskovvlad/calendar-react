@@ -1,9 +1,12 @@
 import React from 'react';
 import Day from '../day/Day';
+import moment from 'moment';
 
 import './week.scss';
 
 const Week = ({ weekDates, events, removeButtonHundler }) => {
+  console.log(events)
+  console.log(weekDates)
   return (
     <div className="calendar__week">
       {weekDates.map((dayStart) => {

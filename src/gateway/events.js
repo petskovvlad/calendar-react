@@ -51,25 +51,26 @@ export async function getEventsData() {
     }
   }
 
-// export async function updateEventsData(eventId, newData) {
-//     try {
-//       const response = await fetch(`${baseUrl}/${eventId}`, {
-//         method: 'PUT',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(newData),
-//       });
-//       if (!response.ok) {
-//         throw new Error('Ошибка при обновлении данных');
-//       }
-//       const updatedData = await response.json();
-//       return updatedData;
-//     } catch (error) {
-//       console.error('Ошибка при обновлении данных:', error);
-//       return null;
-//     }
-//   }
+
+export async function updateEventsData(eventId, newData) {
+    try {
+      const response = await fetch(`${baseUrl}/${eventId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+      });
+      if (!response.ok) {
+        throw new Error('Ошибка при обновлении данных');
+      }
+      const updatedData = await response.json();
+      return updatedData;
+    } catch (error) {
+      console.error('Ошибка при обновлении данных:', error);
+      return null;
+    }
+  }
 
 const events = [
   {
@@ -103,3 +104,5 @@ const events = [
 ];
 
 export default events;
+
+console.log(events);

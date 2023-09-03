@@ -2,7 +2,7 @@ import React from 'react';
 import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
 
-const Hour = ({ dataHour, hourEvents, removeButtonHundler, isVisibleRemoveButton }) => {
+const Hour = ({ dataHour, hourEvents, removeButtonHundler }) => {
   return (
     <div className="calendar__time-slot" data-time={dataHour + 1}>
       {/* if no events in the current hour nothing will render here */}

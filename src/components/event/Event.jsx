@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './event.scss';
 
-const Event = ({ height, marginTop, title, time, id, removeButtonHundler }) => {
+const Event = ({ height, marginTop, title, time, id }) => {
   const [isVisibleRemoveButton, setIsVisibleRemoveButton] = useState(false);
 
   const eventStyle = {

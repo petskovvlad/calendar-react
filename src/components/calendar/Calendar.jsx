@@ -2,15 +2,25 @@ import React, { useState, useEffect } from 'react';
 import Navigation from './../navigation/Navigation';
 import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
-import events from '../../gateway/events';
+import { getEventsData } from '../../gateway/events';
 
 import './calendar.scss';
 
-const Calendar = ({ weekDates, removeButtonHundler }) => {
-  const [currentEvents, setEvents] = useState([events]);
+const Calendar = ({ weekDates }) => {
+  const [currentEvents, setEvents] = useState([]);
 
   useEffect(() => {
-    setEvents(events);
+    // Внутри useEffect делаем запрос на сервер и обновляем состояние
+    async function fetchData() {
+      try {
+        const eventsData = await getEventsData(); // Получаем данные с сервера
+        setEvents(eventsData); // Обновляем состояние
+      } catch (error) {
+        console.error('Ошибка при получении данных с сервера:', error);
+      }
+    }
+
+    fetchData(); // Вызываем функцию получения данных
   }, []);
   
   return (

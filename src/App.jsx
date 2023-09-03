@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
+import moment from 'moment';
 
 import { getWeekStartDate, generateWeekRange, getDateTime } from '../src/utils/dateUtils.js';
 
 import './common.scss';
 import Modal from './components/modal/Modal.jsx';
-import { getEventsData, sendEventsData } from './gateway/events.js';
+import { sendEventsData } from './gateway/events.js';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(getWeekStartDate(new Date()));
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    date: '',
-    startTime: '',
-    endTime: '',
+    dateFrom: '', // Оставляем строку пустой
+    dateTo: '',   // Оставляем строку пустой
     description: '',
   });
 
@@ -27,13 +27,26 @@ const App = () => {
       ...formData,
       [name]: value,
     });
-  }; 
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    sendEventsData(formData);
+  
+    const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`).format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)');
+    const formattedDateTo = moment(`${formData.date}T${formData.endTime}`).format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)');
+  
+    const eventData = {
+      title: formData.title,
+      description: formData.description,
+      dateFrom: formattedDateFrom,
+      dateTo: formattedDateTo,
+    };
+  
+    sendEventsData(eventData);
     setIsOpen(false);
   };
+  
+
 
   const modalHandler = () => {
     setIsOpen(!isOpen)
@@ -53,29 +66,29 @@ const App = () => {
     setWeekStartDate(getWeekStartDate(new Date()));
   }
 
-    const startOfWeek = getWeekStartDate(new Date(weekStartDate)).toLocaleString('en-us', {month: 'short'});
-    const nextWeekStartDate = new Date(weekStartDate);
-    nextWeekStartDate.setDate(nextWeekStartDate.getDate() + 7);
-    const endOfWeek = nextWeekStartDate.toLocaleString('en-us', {month: 'short'})
-    
-    let monthText = startOfWeek;
-    if(startOfWeek !== endOfWeek) {
-      monthText = `${startOfWeek} - ${endOfWeek}`
-    }
+  const startOfWeek = getWeekStartDate(new Date(weekStartDate)).toLocaleString('en-us', { month: 'short' });
+  const nextWeekStartDate = new Date(weekStartDate);
+  nextWeekStartDate.setDate(nextWeekStartDate.getDate() + 7);
+  const endOfWeek = nextWeekStartDate.toLocaleString('en-us', { month: 'short' })
+
+  let monthText = startOfWeek;
+  if (startOfWeek !== endOfWeek) {
+    monthText = `${startOfWeek} - ${endOfWeek}`
+  }
 
   return (
     <>
-      <Header 
-        nextWeek={nextWeek} 
-        prevWeek={prevWeek} 
+      <Header
+        nextWeek={nextWeek}
+        prevWeek={prevWeek}
         todayHandler={todayHandler}
         modalHandler={modalHandler}
         monthText={monthText}
       />
-      {isOpen ? <Modal modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange}/> : ''}
-      <Calendar 
-        weekDates={weekDates} 
-        />
+      {isOpen ? <Modal modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange} /> : ''}
+      <Calendar
+        weekDates={weekDates}
+      />
     </>
   );
 }
