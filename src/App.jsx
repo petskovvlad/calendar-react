@@ -2,22 +2,35 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import moment from 'moment';
-
-import { getWeekStartDate, generateWeekRange, getDateTime } from '../src/utils/dateUtils.js';
-
+import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 import './common.scss';
 import Modal from './components/modal/Modal.jsx';
-import { sendEventsData } from './gateway/events.js';
+import { createEvent, fetchEventList } from './gateway/eventsGateway';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(getWeekStartDate(new Date()));
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    dateFrom: '', // Оставляем строку пустой
-    dateTo: '',   // Оставляем строку пустой
+    dateFrom: '',
+    dateTo: '',
     description: '',
   });
+  const [currentEvents, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const eventsData = await fetchEventList()
+      
+      const formattedEventsData = eventsData.map(event => ({
+        ...event,
+        dateFrom: moment(event.dateFrom).toDate(),
+        dateTo: moment(event.dateTo).toDate(),
+      }));
+      setEvents(formattedEventsData);
+    }
+    fetchData();
+  }, [])
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
 
@@ -29,11 +42,15 @@ const App = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`).format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)');
-    const formattedDateTo = moment(`${formData.date}T${formData.endTime}`).format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)');
+    const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`).format(
+      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)'
+    );
+    const formattedDateTo = moment(`${formData.date}T${formData.endTime}`).format(
+      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)'
+    );
   
     const eventData = {
       title: formData.title,
@@ -41,12 +58,18 @@ const App = () => {
       dateFrom: formattedDateFrom,
       dateTo: formattedDateTo,
     };
+    
+    await createEvent(eventData);
+    const updatedEventsData = await fetchEventList();
   
-    sendEventsData(eventData);
+    const formattedUpdatedEventsData = updatedEventsData.map((event) => ({
+      ...event,
+      dateFrom: moment(event.dateFrom).toDate(),
+      dateTo: moment(event.dateTo).toDate(),
+    }));
+    setEvents(formattedUpdatedEventsData);
     setIsOpen(false);
   };
-  
-
 
   const modalHandler = () => {
     setIsOpen(!isOpen)
@@ -88,6 +111,7 @@ const App = () => {
       {isOpen ? <Modal modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange} /> : ''}
       <Calendar
         weekDates={weekDates}
+        currentEvents={currentEvents}
       />
     </>
   );
