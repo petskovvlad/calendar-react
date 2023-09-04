@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navigation from './../navigation/Navigation';
 import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
-import events, { getEventsData } from '../../gateway/events';
+import { getEventsData } from '../../gateway/eventsGateway';
 import moment from 'moment';
 
 import './calendar.scss';
@@ -25,7 +25,6 @@ const Calendar = ({ weekDates }) => {
         console.error('Ошибка при получении данных с сервера:', error);
       }
     }
-  
     fetchData();
   }, []);
   
