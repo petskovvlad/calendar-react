@@ -71,38 +71,3 @@ export async function updateEventsData(eventId, newData) {
       return null;
     }
   }
-
-const events = [
-  {
-    id: 1,
-    title: 'Go to the gym',
-    description: 'some text here',
-    dateFrom: new Date(2023, 8, 2, 2, 0),
-    dateTo: new Date(2023, 8, 2, 4, 15),
-  },
-  {
-    id: 2,
-    title: 'Go to the school',
-    description: 'hello, 2 am',
-    dateFrom: new Date(2023, 8, 3, 1, 0),
-    dateTo: new Date(2023, 8, 3, 2, 30),
-  },
-  {
-    id: 3,
-    title: 'Lunch',
-    description: '',
-    dateFrom: new Date(2023, 8, 4, 10, 30),
-    dateTo: new Date(2023, 8, 4, 13, 30),
-  },
-  {
-    id: 4,
-    title: 'Meet friend',
-    description: 'at the cafe',
-    dateFrom: new Date(2023, 8, 5, 10, 30),
-    dateTo: new Date(2023, 8, 5, 11, 0),
-  },
-];
-
-export default events;
-
-console.log(events);

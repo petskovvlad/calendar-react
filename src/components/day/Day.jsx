@@ -2,6 +2,7 @@ import React from 'react';
 import Event from '../event/Event';
 import Hour from '../hour/Hour';
 import './day.scss';
+import moment from 'moment';
 
 const Day = ({ dataDay, dayEvents, removeButtonHundler, isVisibleRemoveButton }) => {
   const hours = Array(24)
@@ -11,11 +12,10 @@ const Day = ({ dataDay, dayEvents, removeButtonHundler, isVisibleRemoveButton })
   return (
     <div className="calendar__day" data-day={dataDay}>
       {hours.map((hour) => {
-        //getting all events from the day we will render
-        const hourEvents = dayEvents.filter(
-          (event) => 
-          event.dateFrom.getHours() === hour 
-        );
+        const hourEvents = dayEvents.filter((event) => {
+        const eventHour = moment(event.dateFrom).hour();
+        return eventHour === hour;
+  });
         
         return (
           <>

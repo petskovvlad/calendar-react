@@ -5,21 +5,15 @@ import moment from 'moment';
 import './week.scss';
 
 const Week = ({ weekDates, events, removeButtonHundler }) => {
-  console.log(events)
-  console.log(weekDates)
   return (
     <div className="calendar__week">
       {weekDates.map((dayStart) => {
-        const dayEnd = new Date(dayStart.getTime()).setHours(
-          dayStart.getHours() + 24
-        );
+        const dayEnd = moment(dayStart).add(24, 'hours');
 
         //getting all events from the day we will render
         const dayEvents = events.filter(
           (event) => event.dateFrom > dayStart && event.dateTo < dayEnd
-        );
-
-        
+          );        
 
         return (
           <Day
