@@ -25,7 +25,7 @@ const Hour = ({ dataHour, hourEvents, removeButtonHundler, deleteEventData }) =>
             title={title}
             removeButtonHundler={removeButtonHundler}
             deleteEventData={deleteEventData}
-          />
+            />
         );
       })}
     </div>
