@@ -17,14 +17,13 @@
 
   &:hover {
     font-weight: bold;
-    background-color: red;
+    background-color: blue;
   }
 }
 
 .delete-event-btn {
   cursor: pointer;
   border: none;
-  box-shadow: 2px 10px 49px 0px rgba(0,0,0,0.75);
   border-radius: 4px;
   width: 80px;
   height: 40px;
@@ -37,5 +36,6 @@
 
   &:hover {
     background-color: grey;
+    box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.36);
   }
 }

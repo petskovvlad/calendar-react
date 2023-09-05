@@ -8,6 +8,10 @@
 .create-event-btn {
   padding: 0 16px;
 
+  &:hover {
+    box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.36);
+  }
+
   &__icon {
     margin-right: 8px;
   }
@@ -17,6 +21,10 @@
   &__today-btn {
     margin-left: 32px;
     padding: 0 16px;
+
+    &:hover {
+      box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.36);
+    }
   }
 
   &__nav-icon {
