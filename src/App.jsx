@@ -59,6 +59,7 @@ const App = () => {
       dateTo: formattedDateTo,
     };
     
+
     await createEvent(eventData);
     const updatedEventsData = await fetchEventList();
   

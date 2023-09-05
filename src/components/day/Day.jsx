@@ -3,7 +3,7 @@ import Hour from '../hour/Hour';
 import './day.scss';
 import moment from 'moment';
 
-const Day = ({ dataDay, dayEvents, removeButtonHundler, isVisibleRemoveButton }) => {
+const Day = ({ dataDay, dayEvents, removeButtonHundler }) => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);

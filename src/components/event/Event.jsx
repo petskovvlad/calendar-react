@@ -26,7 +26,7 @@ const Event = ({ height, marginTop, title, time, id }) => {
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
       {isVisibleRemoveButton && (
-        <button className='delete-event-btn isVisibleButton' onClick={() => console.log('remove')}><FontAwesomeIcon icon={faTrash} className='delete-event-btn__icon' beat />Delete</button>
+        <button className='delete-event-btn isVisibleButton' onClick={() => console.log(id)}><FontAwesomeIcon icon={faTrash} className='delete-event-btn__icon' beat />Delete</button>
       )}
     </div>
   );
