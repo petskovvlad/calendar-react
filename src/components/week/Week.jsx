@@ -10,7 +10,6 @@ const Week = ({ weekDates, events, removeButtonHundler, deleteEventData }) => {
       {weekDates.map((dayStart) => {
         const dayEnd = moment(dayStart).add(24, 'hours');
 
-        //getting all events from the day we will render
         const dayEvents = events.filter(
           (event) => event.dateFrom > dayStart && event.dateTo < dayEnd
           );        

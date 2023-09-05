@@ -4,7 +4,6 @@ import './day.scss';
 import moment from 'moment';
 
 const Day = ({ dataDay, dayEvents, removeButtonHundler, deleteEventData }) => {
-
   const [marginTop, setMarginTop] = useState(0);
 
   useEffect(() => {
@@ -36,11 +35,6 @@ const Day = ({ dataDay, dayEvents, removeButtonHundler, deleteEventData }) => {
         const redLineStyle = {
           marginTop,
         };
-        console.log(redLineStyle)
-
-        
-
-
 
         return (
           <div key={dataDay + hour}>
@@ -51,7 +45,6 @@ const Day = ({ dataDay, dayEvents, removeButtonHundler, deleteEventData }) => {
               removeButtonHundler={removeButtonHundler}
               deleteEventData={deleteEventData}
             />
-            {/* Проверяем, является ли текущий час и день текущим */}
           </div>
         );
       })}

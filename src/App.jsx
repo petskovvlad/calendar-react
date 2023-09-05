@@ -3,9 +3,10 @@ import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import moment from 'moment';
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
-import './common.scss';
 import Modal from './components/modal/Modal.jsx';
 import { createEvent, fetchEventList, deleteEvent } from './gateway/eventsGateway';
+
+import './common.scss';
 
 const App = () => {
   const [weekStartDate, setWeekStartDate] = useState(getWeekStartDate(new Date()));

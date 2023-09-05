@@ -2,7 +2,6 @@ import React from 'react';
 import './header.scss';
 
 const Header = ({ nextWeek, prevWeek, todayHandler, monthText, modalHandler }) => {
-
   return (
     <header className="header">
       <button className="button create-event-btn" onClick={modalHandler}>
