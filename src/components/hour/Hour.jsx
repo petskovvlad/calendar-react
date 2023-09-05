@@ -1,7 +1,6 @@
 import React from 'react';
 import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
-import moment from 'moment';
 
 const Hour = ({ dataHour, hourEvents, removeButtonHundler }) => {
   return (

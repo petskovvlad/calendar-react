@@ -17,7 +17,7 @@ const App = () => {
     description: '',
   });
   const [currentEvents, setEvents] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const eventsData = await fetchEventList()

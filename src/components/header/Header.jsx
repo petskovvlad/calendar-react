@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './header.scss';
 
 const Header = ({ nextWeek, prevWeek, todayHandler, monthText, modalHandler }) => {
