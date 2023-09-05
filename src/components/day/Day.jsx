@@ -4,7 +4,7 @@ import './day.scss';
 import moment from 'moment';
 
 const Day = ({ dataDay, dayEvents, removeButtonHundler, deleteEventData }) => {
-  const [marginTop, setMarginTop] = useState(0);
+  const [marginTop, setMarginTop] = useState(moment().minute());
 
   useEffect(() => {
     const intervalId = setInterval(() => {
