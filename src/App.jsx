@@ -72,29 +72,18 @@ const App = () => {
     setIsOpen(false);
   };
 
-  // const deleteEventData = async (eventId) => {
-  //   await deleteEvent(eventId);
-  //   const updatedEventsData = await fetchEventList();
-
-  //   setEvents(updatedEventsData)
-  // };
-
   const deleteEventData = async (eventID) => {
     try {
-      // Удаление события с сервера
       await deleteEvent(eventID);
   
-      // Получение обновленного списка событий с сервера
       const updatedEventsData = await fetchEventList();
   
-      // Форматирование данных событий, как вы делали ранее
       const formattedUpdatedEventsData = updatedEventsData.map((event) => ({
         ...event,
         dateFrom: moment(event.dateFrom).toDate(),
         dateTo: moment(event.dateTo).toDate(),
       }));
   
-      // Обновление состояния currentEvents с обновленными данными
       setEvents(formattedUpdatedEventsData);
     } catch (error) {
       console.error('Ошибка при удалении события:', error);
