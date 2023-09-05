@@ -86,7 +86,7 @@ const App = () => {
   
       setEvents(formattedUpdatedEventsData);
     } catch (error) {
-      console.error('Ошибка при удалении события:', error);
+      alert(`Internal Server Error. Can't display events`)
     }
   };
   

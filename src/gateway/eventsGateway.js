@@ -10,7 +10,7 @@ export const createEvent = eventData => {
   })
   .then(response => {
     if(!response.ok) {
-      throw new Error('Failed to create task');
+      throw alert(`Internal Server Error. Can't display events`)
     }
   })
 }
@@ -20,7 +20,7 @@ export const createEvent = eventData => {
         .then(res => {
           if(res.ok) {
             return res.json();
-          }
+          } throw alert(`Internal Server Error. Can't display events`)
         })
   }
 
@@ -29,7 +29,7 @@ export const createEvent = eventData => {
       method: 'DELETE'
     }).then(response => {
       if(!response.ok) {
-        throw new Error('Failed to delete task');
+        throw alert(`Internal Server Error. Can't display events`)
       }
     });
   }
