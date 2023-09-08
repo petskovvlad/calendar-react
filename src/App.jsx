@@ -106,7 +106,20 @@ const App = () => {
     }
   };
   
-  
+  const slotModalHandler = (dataHour, dataDay) => {
+    setIsOpen(!isOpen)
+    const selectedDate = weekDates.find(date => date.getDate() === dataDay);
+    if (selectedDate) {
+    setIsOpen(!isOpen);
+    setFormData({
+      ...formData,
+      date: moment(selectedDate).format('YYYY-MM-DD'),
+      startTime: moment(dataHour, 'H').format('HH:mm'),
+      endTime: moment(dataHour + 1, 'H').format('HH:mm'),
+      dataDay: dataDay,
+    });
+  }
+}
 
   const modalHandler = () => {
     setIsOpen(!isOpen)
@@ -157,6 +170,9 @@ const App = () => {
         weekDates={weekDates}
         currentEvents={currentEvents}
         deleteEventData={deleteEventData}
+        slotModalHandler={slotModalHandler}
+        setFormData={setFormData}
+        formData={formData}
       />
     </>
   );

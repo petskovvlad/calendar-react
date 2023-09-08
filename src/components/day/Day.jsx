@@ -3,9 +3,8 @@ import Hour from '../hour/Hour';
 import './day.scss';
 import moment from 'moment';
 
-const Day = ({ dataDay, dayEvents, removeButtonHundler, deleteEventData }) => {
+const Day = ({ dataDay, dayEvents, removeButtonHundler, deleteEventData, slotModalHandler, setFormData, formData }) => {
   const [marginTop, setMarginTop] = useState(moment().minute());
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setMarginTop(moment().minute());
@@ -40,10 +39,14 @@ const Day = ({ dataDay, dayEvents, removeButtonHundler, deleteEventData }) => {
           <div key={dataDay + hour}>
             {isCurrentDay && isCurrentHour && <div style={redLineStyle} className='red-line'></div>}
             <Hour
+              dataDay={dataDay}
               dataHour={hour}
               hourEvents={hourEvents}
               removeButtonHundler={removeButtonHundler}
               deleteEventData={deleteEventData}
+              slotModalHandler={slotModalHandler}
+              setFormData={setFormData}
+              formData={formData}
             />
           </div>
         );
