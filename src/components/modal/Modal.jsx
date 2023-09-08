@@ -1,7 +1,8 @@
-import React from 'react';
+import moment from 'moment';
+import React, { useState } from 'react';
 import './modal.scss';
 
-const Modal = ({ modalHandler, handleInputChange, handleSubmit }) => {
+const Modal = ({ formData, modalHandler, handleInputChange, handleSubmit }) => {
     return (
       <div className='modal overlay'>
         <div className="modal__content">
@@ -21,12 +22,14 @@ const Modal = ({ modalHandler, handleInputChange, handleSubmit }) => {
                   name="date" 
                   className="event-form__field" 
                   onChange={handleInputChange}
+                  value={formData.date}
                 />
                 <input
                   type="time"
                   name="startTime"
                   className="event-form__field"
                   onChange={handleInputChange}
+                  value={formData.startTime}
                 />
                 <span>-</span>
                 <input
@@ -34,6 +37,7 @@ const Modal = ({ modalHandler, handleInputChange, handleSubmit }) => {
                   name="endTime"
                   className="event-form__field"
                   onChange={handleInputChange}
+                  value={formData.endTime}
                 />
               </div>
               <textarea

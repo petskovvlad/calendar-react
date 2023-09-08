@@ -45,6 +45,21 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const isTimeValid = (time) => {
+      const timeMoment = moment(time, 'HH:mm');
+      return timeMoment.minutes() % 15 === 0;
+    };
+    
+    const isFormDataValid = () => {
+      const { startTime, endTime } = formData;
+      return isTimeValid(startTime) && isTimeValid(endTime);
+    };
+
+    if (!isFormDataValid()) {
+      alert('The start and end times must be divisible by 15 minutes.');
+      return;
+    }
   
     const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`).format(
       'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)'
@@ -95,6 +110,13 @@ const App = () => {
 
   const modalHandler = () => {
     setIsOpen(!isOpen)
+    setFormData({
+      ...formData,
+      date: moment().format('YYYY-MM-DD'),
+      startTime: moment().format('HH:mm'),
+      endTime: moment().add(1, 'hour').format('HH:mm'),
+    
+    })
   }
 
   const nextWeek = () => {
@@ -130,7 +152,7 @@ const App = () => {
         modalHandler={modalHandler}
         monthText={monthText}
       />
-      {isOpen ? <Modal modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange} /> : ''}
+      {isOpen ? <Modal formData={formData} modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange} /> : ''}
       <Calendar
         weekDates={weekDates}
         currentEvents={currentEvents}
