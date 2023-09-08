@@ -1,5 +1,4 @@
-import moment from 'moment';
-import React, { useState } from 'react';
+import React from 'react';
 import './modal.scss';
 
 const Modal = ({ formData, modalHandler, handleInputChange, handleSubmit }) => {
