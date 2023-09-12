@@ -10,7 +10,7 @@ const Hour = ({ dataDay, dataHour, hourEvents, removeButtonHundler, deleteEventD
     <div 
       className="calendar__time-slot" 
       data-time={dataHour + 1} 
-      onClick={handleTimeSlotClick}
+      onDoubleClick={handleTimeSlotClick}
       >
       {}
       {hourEvents.map(({ id, dateFrom, dateTo, title }) => {

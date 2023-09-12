@@ -60,7 +60,16 @@ const App = () => {
       alert('The start and end times must be divisible by 15 minutes.');
       return;
     }
-  
+
+    const { date, startTime, endTime } = formData;
+    const startDateTime = moment(`${date}T${startTime}`);
+    const endDateTime = moment(`${date}T${endTime}`);
+
+    if ((!startDateTime.isSame(endDateTime, 'day')) || (endDateTime.isBefore(startDateTime))) {
+      alert('The event must start and end within the same day.');
+      return;
+    }
+
     const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`).format(
       'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)'
     );
@@ -74,24 +83,33 @@ const App = () => {
       dateFrom: formattedDateFrom,
       dateTo: formattedDateTo,
     };
+
+    const newEventStart = moment(formattedDateFrom);
+    const newEventEnd = moment(formattedDateTo);
+
+  const durationHours = newEventEnd.diff(newEventStart, 'hours');
+  if (durationHours > 6) {
+    alert('The event duration cannot exceed 6 hours.');
+    return;
+  }
+
+  const isOverlap = currentEvents.some((event) => {
+    const eventStart = moment(event.dateFrom);
+    const eventEnd = moment(event.dateTo);
+    return (
+      (newEventStart.isSameOrBefore(eventEnd) && newEventStart.isSameOrAfter(eventStart)) ||
+      (newEventEnd.isSameOrBefore(eventEnd) && newEventEnd.isSameOrAfter(eventStart))
+    );
+  });
+
+  if (isOverlap) {
+    alert('The event overlaps with existing events. Please choose another time.');
+    return;
+  }
     
 
-    await createEvent(eventData);
-    const updatedEventsData = await fetchEventList();
-  
-    const formattedUpdatedEventsData = updatedEventsData.map((event) => ({
-      ...event,
-      dateFrom: moment(event.dateFrom).toDate(),
-      dateTo: moment(event.dateTo).toDate(),
-    }));
-    setEvents(formattedUpdatedEventsData);
-    setIsOpen(false);
-  };
-
-  const deleteEventData = async (eventID) => {
-    try {
-      await deleteEvent(eventID);
-  
+    if (!isOverlap) {
+      await createEvent(eventData);
       const updatedEventsData = await fetchEventList();
   
       const formattedUpdatedEventsData = updatedEventsData.map((event) => ({
@@ -99,12 +117,37 @@ const App = () => {
         dateFrom: moment(event.dateFrom).toDate(),
         dateTo: moment(event.dateTo).toDate(),
       }));
-  
       setEvents(formattedUpdatedEventsData);
-    } catch (error) {
-      alert(`Internal Server Error. Can't display events`)
+      setIsOpen(false);
+  }
+}
+
+const deleteEventData = async (eventID, eventStartTime) => {
+  try {
+    const currentTime = moment();
+    const startTime = moment(eventStartTime);
+    
+    if (startTime.diff(currentTime, 'minutes') <= 15) {
+      alert(`You can't delete the event less than 15 minutes before it starts.`);
+      return;
     }
-  };
+    
+    await deleteEvent(eventID);
+
+    const updatedEventsData = await fetchEventList();
+
+    const formattedUpdatedEventsData = updatedEventsData.map((event) => ({
+      ...event,
+      dateFrom: moment(event.dateFrom).toDate(),
+      dateTo: moment(event.dateTo).toDate(),
+    }));
+
+    setEvents(formattedUpdatedEventsData);
+  } catch (error) {
+    alert(`Internal Server Error. Can't display events`);
+  }
+};
+
   
   const slotModalHandler = (dataHour, dataDay) => {
     setIsOpen(!isOpen)
