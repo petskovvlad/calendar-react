@@ -6,6 +6,7 @@ import './event.scss';
 const Event = ({ height, marginTop, title, time, id, deleteEventData }) => {
   const [isVisibleRemoveButton, setIsVisibleRemoveButton] = useState(false);
 
+  console.log(time)
   const eventStyle = {
     height,
     marginTop,
@@ -27,7 +28,7 @@ const Event = ({ height, marginTop, title, time, id, deleteEventData }) => {
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
       {isVisibleRemoveButton && (
-        <button className='delete-event-btn isVisibleButton' onClick={() => deleteEventData(id)}><FontAwesomeIcon icon={faTrash} className='delete-event-btn__icon' beat />Delete</button>
+        <button className='delete-event-btn isVisibleButton' onClick={() => deleteEventData(id, time)}><FontAwesomeIcon icon={faTrash} className='delete-event-btn__icon' beat />Delete</button>
         )}
     </div>
         </div>

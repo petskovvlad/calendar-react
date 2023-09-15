@@ -126,7 +126,7 @@ const deleteEventData = async (eventID, eventStartTime) => {
   try {
     const currentTime = moment();
     const startTime = moment(eventStartTime);
-    
+
     if (startTime.diff(currentTime, 'minutes') <= 15) {
       alert(`You can't delete the event less than 15 minutes before it starts.`);
       return;
