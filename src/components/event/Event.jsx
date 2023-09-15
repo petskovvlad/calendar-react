@@ -6,7 +6,6 @@ import './event.scss';
 const Event = ({ height, marginTop, title, time, id, deleteEventData }) => {
   const [isVisibleRemoveButton, setIsVisibleRemoveButton] = useState(false);
 
-  console.log(time)
   const eventStyle = {
     height,
     marginTop,
