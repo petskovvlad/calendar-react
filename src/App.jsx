@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import moment from 'moment';
@@ -220,5 +221,30 @@ const deleteEventData = async (eventID, eventStartTime) => {
     </>
   );
 }
+
+App.propTypes = {
+  weekStartDate: PropTypes.instanceOf(Date),
+  isOpen: PropTypes.bool,
+  formData: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    startTime: PropTypes.string.isRequired,
+    endTime: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    dataDay: PropTypes.number.isRequired,
+  }),
+  currentEvents: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      dateFrom: PropTypes.instanceOf(Date).isRequired,
+      dateTo: PropTypes.instanceOf(Date).isRequired,
+    })
+  ),
+  setWeekStartDate: PropTypes.func,
+  setIsOpen: PropTypes.func,
+  setFormData: PropTypes.func,
+  setEvents: PropTypes.func,
+};
 
 export default App;

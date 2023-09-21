@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Navigation from './../navigation/Navigation';
 import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
@@ -6,7 +7,7 @@ import Sidebar from '../sidebar/Sidebar';
 import './calendar.scss';
 
 const Calendar = ({ weekDates, currentEvents, deleteEventData, slotModalHandler, setFormData, formData }) => {
-  return (
+    return (
       <section className="calendar">
         <Navigation weekDates={weekDates} />
         <div className="calendar__body">
@@ -25,5 +26,28 @@ const Calendar = ({ weekDates, currentEvents, deleteEventData, slotModalHandler,
       </section>
     )
 }
+
+Calendar.propTypes = {
+  weekDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)).isRequired,
+  currentEvents: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      dateFrom: PropTypes.instanceOf(Date).isRequired,
+      dateTo: PropTypes.instanceOf(Date).isRequired,
+      description: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  deleteEventData: PropTypes.func.isRequired,
+  slotModalHandler: PropTypes.func.isRequired,
+  setFormData: PropTypes.func.isRequired,
+  formData: PropTypes.shape({
+    title: PropTypes.string,
+    date: PropTypes.string,
+    startTime: PropTypes.string,
+    endTime: PropTypes.string,
+    description: PropTypes.string,
+    dataDay: PropTypes.number,
+  }),
+};
 
 export default Calendar;

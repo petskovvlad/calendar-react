@@ -17,20 +17,19 @@ const Event = ({ height, marginTop, title, time, id, deleteEventData }) => {
 
   return (
     <div className='event-container'>
-    <div
-    key={id}
-    style={eventStyle}
-    className="event"
-    onMouseEnter={toggleRemoveButton}
-    onMouseLeave={toggleRemoveButton}
-    >
+      <div
+        key={id}
+        style={eventStyle}
+        className="event"
+        onClick={toggleRemoveButton}
+      >
       <div className="event__title">{title}</div>
       <div className="event__time">{time}</div>
       {isVisibleRemoveButton && (
         <button className='delete-event-btn isVisibleButton' onClick={() => deleteEventData(id, time)}><FontAwesomeIcon icon={faTrash} className='delete-event-btn__icon' beat />Delete</button>
         )}
+      </div>
     </div>
-        </div>
   );
 };
 

@@ -11,7 +11,7 @@ const Week = ({ weekDates, events, removeButtonHundler, deleteEventData, slotMod
         const dayEnd = moment(dayStart).add(24, 'hours');
 
         const dayEvents = events.filter(
-          (event) => event.dateFrom > dayStart && event.dateTo < dayEnd
+          (event) => event.dateFrom >= dayStart && event.dateTo < dayEnd
           );        
 
         return (
