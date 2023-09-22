@@ -71,12 +71,8 @@ const App = () => {
       return;
     }
 
-    const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`).format(
-      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)'
-    );
-    const formattedDateTo = moment(`${formData.date}T${formData.endTime}`).format(
-      'ddd MMM DD YYYY HH:mm:ss [GMT]ZZ (за східноєвропейським літнім часом)'
-    );
+    const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`, 'YYYY-MM-DDTHH:mm')
+    const formattedDateTo = moment(`${formData.date}T${formData.endTime}`, 'YYYY-MM-DDTHH:mm')
   
     const eventData = {
       title: formData.title,
@@ -125,8 +121,8 @@ const App = () => {
 
 const deleteEventData = async (eventID, eventStartTime) => {
   try {
-    const currentTime = moment();
-    const startTime = moment(eventStartTime);
+    const currentTime = moment().format('YYYY-MM-DDTHH:mm');
+    const startTime = moment(eventStartTime, 'YYYY-MM-DDTHH:mm');
 
     if (startTime.diff(currentTime, 'minutes') <= 15) {
       alert(`You can't delete the event less than 15 minutes before it starts.`);
