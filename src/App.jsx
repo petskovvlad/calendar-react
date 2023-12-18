@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
-import moment from 'moment';
-import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 import Modal from './components/modal/Modal.jsx';
+import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 import { createEvent, fetchEventList, deleteEvent } from './gateway/eventsGateway';
 
 import './common.scss';
@@ -22,8 +22,7 @@ const App = () => {
   
   useEffect(() => {
     const fetchData = async () => {
-      const eventsData = await fetchEventList()
-      
+      const eventsData = await fetchEventList()     
       const formattedEventsData = eventsData.map(event => ({
         ...event,
         dateFrom: moment(event.dateFrom).toDate(),
@@ -46,10 +45,8 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const isTimeValid = (time) => {
-      const timeMoment = moment(time, 'HH:mm');
-      return timeMoment.minutes() % 15 === 0;
+      return moment(time, 'HH:mm').minutes() % 15 === 0;
     };
     
     const isFormDataValid = () => {
@@ -102,8 +99,7 @@ const App = () => {
   if (isOverlap) {
     alert('The event overlaps with existing events. Please choose another time.');
     return;
-  }
-    
+  } 
 
     if (!isOverlap) {
       await createEvent(eventData);
@@ -132,7 +128,6 @@ const deleteEventData = async (eventID, eventStartTime) => {
     await deleteEvent(eventID);
 
     const updatedEventsData = await fetchEventList();
-
     const formattedUpdatedEventsData = updatedEventsData.map((event) => ({
       ...event,
       dateFrom: moment(event.dateFrom).toDate(),
@@ -156,7 +151,7 @@ const deleteEventData = async (eventID, eventStartTime) => {
       date: moment(selectedDate).format('YYYY-MM-DD'),
       startTime: moment(dataHour, 'H').format('HH:mm'),
       endTime: moment(dataHour + 1, 'H').format('HH:mm'),
-      dataDay: dataDay,
+      dataDay,
     });
   }
 }
@@ -168,7 +163,6 @@ const deleteEventData = async (eventID, eventStartTime) => {
       date: moment().format('YYYY-MM-DD'),
       startTime: moment().format('HH:mm'),
       endTime: moment().add(1, 'hour').format('HH:mm'),
-    
     })
   }
 
@@ -191,29 +185,13 @@ const deleteEventData = async (eventID, eventStartTime) => {
   nextWeekStartDate.setDate(nextWeekStartDate.getDate() + 7);
   const endOfWeek = nextWeekStartDate.toLocaleString('en-us', { month: 'short' })
 
-  let monthText = startOfWeek;
-  if (startOfWeek !== endOfWeek) {
-    monthText = `${startOfWeek} - ${endOfWeek}`
-  }
+  const monthText = startOfWeek !== endOfWeek ? `${startOfWeek} - ${endOfWeek}` : startOfWeek;
 
   return (
     <>
-      <Header
-        nextWeek={nextWeek}
-        prevWeek={prevWeek}
-        todayHandler={todayHandler}
-        modalHandler={modalHandler}
-        monthText={monthText}
-      />
+      <Header nextWeek={nextWeek} prevWeek={prevWeek} todayHandler={todayHandler} modalHandler={modalHandler} monthText={monthText} />
       {isOpen ? <Modal formData={formData} modalHandler={modalHandler} handleSubmit={handleSubmit} handleInputChange={handleInputChange} /> : ''}
-      <Calendar
-        weekDates={weekDates}
-        currentEvents={currentEvents}
-        deleteEventData={deleteEventData}
-        slotModalHandler={slotModalHandler}
-        setFormData={setFormData}
-        formData={formData}
-      />
+      <Calendar weekDates={weekDates} currentEvents={currentEvents} deleteEventData={deleteEventData} slotModalHandler={slotModalHandler} setFormData={setFormData} formData={formData} />
     </>
   );
 }
