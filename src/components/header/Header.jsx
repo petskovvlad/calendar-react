@@ -9,7 +9,9 @@ const Header = ({ nextWeek, prevWeek, todayHandler, monthText, modalHandler }) =
         <i className="fas fa-plus create-event-btn__icon"></i>Create
       </button>
       <div className="navigation">
-        <button className="navigation__today-btn button" onClick={todayHandler}>Today</button>
+        <button className="navigation__today-btn button" onClick={todayHandler}>
+          Today
+        </button>
         <button className="icon-button navigation__nav-icon" onClick={prevWeek}>
           <i className="fas fa-chevron-left"></i>
         </button>

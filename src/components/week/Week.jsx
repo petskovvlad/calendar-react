@@ -4,15 +4,23 @@ import moment from 'moment';
 
 import './week.scss';
 
-const Week = ({ weekDates, events, removeButtonHundler, deleteEventData, slotModalHandler, setFormData, formData }) => {
+const Week = ({
+  weekDates,
+  events,
+  removeButtonHundler,
+  deleteEventData,
+  slotModalHandler,
+  setFormData,
+  formData,
+}) => {
   return (
     <div className="calendar__week">
-      {weekDates.map((dayStart) => {
+      {weekDates.map(dayStart => {
         const dayEnd = moment(dayStart).add(24, 'hours');
 
         const dayEvents = events.filter(
-          (event) => event.dateFrom >= dayStart && event.dateTo < dayEnd
-          );        
+          event => event.dateFrom >= dayStart && event.dateTo < dayEnd,
+        );
 
         return (
           <Day

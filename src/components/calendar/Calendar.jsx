@@ -6,26 +6,33 @@ import Sidebar from '../sidebar/Sidebar';
 
 import './calendar.scss';
 
-const Calendar = ({ weekDates, currentEvents, deleteEventData, slotModalHandler, setFormData, formData }) => {
-    return (
-      <section className="calendar">
-        <Navigation weekDates={weekDates} />
-        <div className="calendar__body">
-          <div className="calendar__week-container">
-            <Sidebar />
-            <Week 
-              weekDates={weekDates} 
-              events={currentEvents}
-              deleteEventData={deleteEventData}
-              slotModalHandler={slotModalHandler}
-              setFormData={setFormData}
-              formData={formData} 
-              />
-          </div>
+const Calendar = ({
+  weekDates,
+  currentEvents,
+  deleteEventData,
+  slotModalHandler,
+  setFormData,
+  formData,
+}) => {
+  return (
+    <section className="calendar">
+      <Navigation weekDates={weekDates} />
+      <div className="calendar__body">
+        <div className="calendar__week-container">
+          <Sidebar />
+          <Week
+            weekDates={weekDates}
+            events={currentEvents}
+            deleteEventData={deleteEventData}
+            slotModalHandler={slotModalHandler}
+            setFormData={setFormData}
+            formData={formData}
+          />
         </div>
-      </section>
-    )
-}
+      </div>
+    </section>
+  );
+};
 
 Calendar.propTypes = {
   weekDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)).isRequired,
@@ -35,7 +42,7 @@ Calendar.propTypes = {
       dateFrom: PropTypes.instanceOf(Date).isRequired,
       dateTo: PropTypes.instanceOf(Date).isRequired,
       description: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   deleteEventData: PropTypes.func.isRequired,
   slotModalHandler: PropTypes.func.isRequired,

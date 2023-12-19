@@ -2,7 +2,9 @@
 
 ### [Site link](https://famous-sunflower-c83206.netlify.app/)
 
-Showing current date, creating/deleting events in the schedule, switching between weeks, showing a dynamic line with actual time 
+Showing current date, creating/deleting events in the schedule, switching between weeks, showing a dynamic line with actual time.
+
+Layout support desktop (up-to-1920) version.
 
 ### The tech stack is:
 
