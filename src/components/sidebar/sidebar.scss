@@ -13,6 +13,30 @@
   height: 60px;
   width: 48px;
   text-align: right;
+  &:nth-child(1) {
+    margin-top: -4px;
+  }
+  &:nth-child(2) {
+    margin-top: -6px;
+  }
+  &:nth-child(3) {
+    margin-top: -2px;
+  }
+  &:nth-child(4) {
+    margin-top: 0;
+  }
+  &:nth-child(5) {
+    margin-top: -4px;
+  }
+  &:nth-child(11) {
+    margin-top: -4px;
+  }
+  &:nth-child(15) {
+    margin-top: -3px;
+  }
+  &:nth-child(20) {
+    margin-top: -3px;
+  }
 
   &__time {
     font-size: 12px;
