@@ -11,6 +11,7 @@ const Day = ({
   slotModalHandler,
   setFormData,
   formData,
+  weekDates,
 }) => {
   const [marginTop, setMarginTop] = useState(moment().minute());
   useEffect(() => {
@@ -37,6 +38,9 @@ const Day = ({
 
         const isCurrentDay = moment().get('date') === dataDay;
         const isCurrentHour = moment().get('hour') === hour;
+        const isCurrentMonth = weekDates.some(day => {
+          return moment(day).get('month') === moment().get('month');
+        });
 
         const redLineStyle = {
           marginTop,
@@ -44,7 +48,9 @@ const Day = ({
 
         return (
           <div key={dataDay + hour}>
-            {isCurrentDay && isCurrentHour && <div style={redLineStyle} className="red-line"></div>}
+            {isCurrentDay && isCurrentHour && isCurrentMonth && (
+              <div style={redLineStyle} className="red-line"></div>
+            )}
             <Hour
               dataDay={dataDay}
               dataHour={hour}

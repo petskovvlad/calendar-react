@@ -32,6 +32,7 @@ const Week = ({
             slotModalHandler={slotModalHandler}
             setFormData={setFormData}
             formData={formData}
+            weekDates={weekDates}
           />
         );
       })}
