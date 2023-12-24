@@ -34,6 +34,7 @@ const Hour = ({
             title={title}
             removeButtonHundler={removeButtonHundler}
             deleteEventData={deleteEventData}
+            eventStart={dateFrom}
           />
         );
       })}

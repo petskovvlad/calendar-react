@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import './event.scss';
 
-const Event = ({ height, marginTop, title, time, id, deleteEventData }) => {
+const Event = ({ height, marginTop, title, time, id, deleteEventData, eventStart }) => {
   const [isVisibleRemoveButton, setIsVisibleRemoveButton] = useState(false);
 
   const eventStyle = {
@@ -23,7 +23,7 @@ const Event = ({ height, marginTop, title, time, id, deleteEventData }) => {
         {isVisibleRemoveButton && (
           <button
             className="delete-event-btn isVisibleButton"
-            onClick={() => deleteEventData(id, time)}
+            onClick={() => deleteEventData(id, eventStart)}
           >
             <FontAwesomeIcon icon={faTrash} className="delete-event-btn__icon" beat />
             Delete

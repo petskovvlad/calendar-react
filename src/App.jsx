@@ -45,6 +45,7 @@ const App = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
     const isTimeValid = time => {
       return moment(time, 'HH:mm').minutes() % 15 === 0;
     };
@@ -115,16 +116,15 @@ const App = () => {
     }
   };
 
-  const deleteEventData = async (eventID, eventStartTime) => {
+  const deleteEventData = async (eventID, eventStart) => {
     try {
-      const currentTime = moment().format('YYYY-MM-DDTHH:mm');
-      const startTime = moment(eventStartTime, 'YYYY-MM-DDTHH:mm');
-
-      if (startTime.diff(currentTime, 'minutes') <= 15) {
+      const currentTime = moment();
+      const startTime = moment(eventStart, 'YYYY-MM-DDTHH:mm');
+      const timeDifferenceMinutes = startTime.diff(currentTime, 'minutes');
+      if (timeDifferenceMinutes <= 15 && timeDifferenceMinutes > 0) {
         alert(`You can't delete the event less than 15 minutes before it starts.`);
         return;
       }
-
       await deleteEvent(eventID);
 
       const updatedEventsData = await fetchEventList();
