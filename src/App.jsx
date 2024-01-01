@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
 import Modal from './components/modal/Modal.jsx';
-import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
+import { getWeekStartDate, generateWeekRange, formatDateAndTime } from '@utils/dateUtils.js';
 import { createEvent, fetchEventList, deleteEvent } from './gateway/eventsGateway';
 
 import './common.scss';
@@ -46,64 +46,18 @@ const App = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const isTimeValid = time => {
-      return moment(time, 'HH:mm').minutes() % 15 === 0;
-    };
-
-    const isFormDataValid = () => {
-      const { startTime, endTime } = formData;
-      return isTimeValid(startTime) && isTimeValid(endTime);
-    };
-
-    if (!isFormDataValid()) {
-      alert('The start and end times must be divisible by 15 minutes.');
-      return;
-    }
-
     const { date, startTime, endTime } = formData;
-    const startDateTime = moment(`${date}T${startTime}`);
-    const endDateTime = moment(`${date}T${endTime}`);
-
-    if (!startDateTime.isSame(endDateTime, 'day') || endDateTime.isBefore(startDateTime)) {
-      alert('The event must start and end within the same day.');
-      return;
-    }
-
-    const formattedDateFrom = moment(`${formData.date}T${formData.startTime}`, 'YYYY-MM-DDTHH:mm');
-    const formattedDateTo = moment(`${formData.date}T${formData.endTime}`, 'YYYY-MM-DDTHH:mm');
 
     const eventData = {
       title: formData.title,
       description: formData.description,
-      dateFrom: formattedDateFrom,
-      dateTo: formattedDateTo,
+      dateFrom: formatDateAndTime(date, startTime),
+      dateTo: formatDateAndTime(date, endTime),
     };
 
-    const newEventStart = moment(formattedDateFrom);
-    const newEventEnd = moment(formattedDateTo);
-
-    const durationHours = newEventEnd.diff(newEventStart, 'hours');
-    if (durationHours > 6) {
-      alert('The event duration cannot exceed 6 hours.');
-      return;
-    }
-
-    const isOverlap = currentEvents.some(event => {
-      const eventStart = moment(event.dateFrom);
-      const eventEnd = moment(event.dateTo);
-      return (
-        (newEventStart.isSameOrBefore(eventEnd) && newEventStart.isSameOrAfter(eventStart)) ||
-        (newEventEnd.isSameOrBefore(eventEnd) && newEventEnd.isSameOrAfter(eventStart))
-      );
-    });
-
-    if (isOverlap) {
-      alert('The event overlaps with existing events. Please choose another time.');
-      return;
-    }
-
-    if (!isOverlap) {
+    try {
       await createEvent(eventData);
+
       const updatedEventsData = await fetchEventList();
 
       const formattedUpdatedEventsData = updatedEventsData.map(event => ({
@@ -113,14 +67,15 @@ const App = () => {
       }));
       setEvents(formattedUpdatedEventsData);
       setIsOpen(false);
+    } catch (error) {
+      alert(`Internal Server Error. Can't display events`);
     }
   };
 
   const deleteEventData = async (eventID, eventStart) => {
     try {
-      const currentTime = moment();
       const startTime = moment(eventStart, 'YYYY-MM-DDTHH:mm');
-      const timeDifferenceMinutes = startTime.diff(currentTime, 'minutes');
+      const timeDifferenceMinutes = startTime.diff(moment(), 'minutes');
       if (timeDifferenceMinutes <= 15 && timeDifferenceMinutes > 0) {
         alert(`You can't delete the event less than 15 minutes before it starts.`);
         return;
@@ -197,15 +152,14 @@ const App = () => {
         modalHandler={modalHandler}
         monthText={monthText}
       />
-      {isOpen ? (
+      {isOpen && (
         <Modal
           formData={formData}
           modalHandler={modalHandler}
           handleSubmit={handleSubmit}
           handleInputChange={handleInputChange}
+          currentEvents={currentEvents}
         />
-      ) : (
-        ''
       )}
       <Calendar
         weekDates={weekDates}

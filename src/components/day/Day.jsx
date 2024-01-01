@@ -26,7 +26,7 @@ const Day = ({
 
   const hours = Array(24)
     .fill()
-    .map((val, index) => index);
+    .map((_, index) => index);
 
   return (
     <div className="calendar__day" data-day={dataDay}>

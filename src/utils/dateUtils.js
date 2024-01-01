@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getWeekStartDate = date => {
   const dateCopy = new Date(date);
   const dayOfWeek = dateCopy.getDay();
@@ -26,6 +28,8 @@ export const getDateTime = (date, time) => {
 export const formatMins = mins => {
   return mins < 10 ? `0${mins}` : mins;
 };
+
+export const formatDateAndTime = (date, time) => moment(`${date}T${time}`, 'YYYY-MM-DDTHH:mm');
 
 export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export const months = [

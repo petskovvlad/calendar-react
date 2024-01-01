@@ -31,6 +31,9 @@ module.exports = (env, argv) => {
     },
     resolve: {
       extensions: ['.js', '.jsx'],
+      alias: {
+        '@utils': `${__dirname}/src/utils`,
+      },
     },
     plugins: [
       new webpack.ProgressPlugin(),

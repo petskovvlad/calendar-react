@@ -1,6 +1,6 @@
 import React from 'react';
 import Event from '../event/Event';
-import { formatMins } from '../../../src/utils/dateUtils.js';
+import { formatMins } from '@utils/dateUtils.js';
 
 const Hour = ({
   dataDay,
@@ -19,7 +19,6 @@ const Hour = ({
       data-time={dataHour + 1}
       onDoubleClick={handleTimeSlotClick}
     >
-      {}
       {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
         const eventStart = `${dateFrom.getHours()}:${formatMins(dateFrom.getMinutes())}`;
         const eventEnd = `${dateTo.getHours()}:${formatMins(dateTo.getMinutes())}`;
