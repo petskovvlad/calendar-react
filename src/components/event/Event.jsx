@@ -6,18 +6,13 @@ import './event.scss';
 const Event = ({ height, marginTop, title, time, id, deleteEventData, eventStart }) => {
   const [isVisibleRemoveButton, setIsVisibleRemoveButton] = useState(false);
 
-  const eventStyle = {
-    height,
-    marginTop,
-  };
-
   const toggleRemoveButton = () => {
     setIsVisibleRemoveButton(!isVisibleRemoveButton);
   };
 
   return (
     <div className="event-container">
-      <div key={id} style={eventStyle} className="event" onClick={toggleRemoveButton}>
+      <div key={id} style={{ height, marginTop }} className="event" onClick={toggleRemoveButton}>
         <div className="event__title">{title}</div>
         <div className="event__time">{time}</div>
         {isVisibleRemoveButton && (

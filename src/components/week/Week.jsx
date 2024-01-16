@@ -5,7 +5,7 @@ import moment from 'moment';
 import './week.scss';
 
 const Week = ({
-  weekDates,
+  weekDays,
   events,
   removeButtonHundler,
   deleteEventData,
@@ -15,7 +15,7 @@ const Week = ({
 }) => {
   return (
     <div className="calendar__week">
-      {weekDates.map(dayStart => {
+      {weekDays.map(dayStart => {
         const dayEnd = moment(dayStart).add(24, 'hours');
 
         const dayEvents = events.filter(
@@ -32,7 +32,7 @@ const Week = ({
             slotModalHandler={slotModalHandler}
             setFormData={setFormData}
             formData={formData}
-            weekDates={weekDates}
+            weekDays={weekDays}
           />
         );
       })}

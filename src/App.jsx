@@ -21,19 +21,22 @@ const App = () => {
   const [currentEvents, setEvents] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const eventsData = await fetchEventList();
-      const formattedEventsData = eventsData.map(event => ({
-        ...event,
-        dateFrom: moment(event.dateFrom).toDate(),
-        dateTo: moment(event.dateTo).toDate(),
-      }));
-      setEvents(formattedEventsData);
-    };
     fetchData();
   }, []);
 
-  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+  const formatDate = date => moment(date).toDate();
+
+  const fetchData = async () => {
+    const eventsData = await fetchEventList();
+    const formattedEventsData = eventsData.map(event => ({
+      ...event,
+      dateFrom: formatDate(event.dateFrom),
+      dateTo: formatDate(event.dateTo),
+    }));
+    setEvents(formattedEventsData);
+  };
+
+  const weekDays = generateWeekRange(getWeekStartDate(weekStartDate));
 
   const handleInputChange = e => {
     const { name, value } = e.target;
@@ -46,11 +49,11 @@ const App = () => {
   const handleSubmit = async e => {
     e.preventDefault();
 
-    const { date, startTime, endTime } = formData;
+    const { date, startTime, endTime, title, description } = formData;
 
     const eventData = {
-      title: formData.title,
-      description: formData.description,
+      title,
+      description,
       dateFrom: formatDateAndTime(date, startTime),
       dateTo: formatDateAndTime(date, endTime),
     };
@@ -62,8 +65,8 @@ const App = () => {
 
       const formattedUpdatedEventsData = updatedEventsData.map(event => ({
         ...event,
-        dateFrom: moment(event.dateFrom).toDate(),
-        dateTo: moment(event.dateTo).toDate(),
+        dateFrom: formatDate(event.dateFrom),
+        dateTo: formatDate(event.dateTo),
       }));
       setEvents(formattedUpdatedEventsData);
       setIsOpen(false);
@@ -85,8 +88,8 @@ const App = () => {
       const updatedEventsData = await fetchEventList();
       const formattedUpdatedEventsData = updatedEventsData.map(event => ({
         ...event,
-        dateFrom: moment(event.dateFrom).toDate(),
-        dateTo: moment(event.dateTo).toDate(),
+        dateFrom: formatDate(event.dateFrom),
+        dateTo: formatDate(event.dateTo),
       }));
 
       setEvents(formattedUpdatedEventsData);
@@ -97,7 +100,7 @@ const App = () => {
 
   const slotModalHandler = (dataHour, dataDay) => {
     setIsOpen(!isOpen);
-    const selectedDate = weekDates.find(date => date.getDate() === dataDay);
+    const selectedDate = weekDays.find(date => date.getDate() === dataDay);
     if (selectedDate) {
       setIsOpen(!isOpen);
       setFormData({
@@ -162,7 +165,7 @@ const App = () => {
         />
       )}
       <Calendar
-        weekDates={weekDates}
+        weekDays={weekDays}
         currentEvents={currentEvents}
         deleteEventData={deleteEventData}
         slotModalHandler={slotModalHandler}

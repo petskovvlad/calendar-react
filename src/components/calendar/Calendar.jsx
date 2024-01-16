@@ -7,7 +7,7 @@ import Sidebar from '../sidebar/Sidebar';
 import './calendar.scss';
 
 const Calendar = ({
-  weekDates,
+  weekDays,
   currentEvents,
   deleteEventData,
   slotModalHandler,
@@ -16,12 +16,12 @@ const Calendar = ({
 }) => {
   return (
     <section className="calendar">
-      <Navigation weekDates={weekDates} />
+      <Navigation weekDays={weekDays} />
       <div className="calendar__body">
         <div className="calendar__week-container">
           <Sidebar />
           <Week
-            weekDates={weekDates}
+            weekDays={weekDays}
             events={currentEvents}
             deleteEventData={deleteEventData}
             slotModalHandler={slotModalHandler}
@@ -35,7 +35,7 @@ const Calendar = ({
 };
 
 Calendar.propTypes = {
-  weekDates: PropTypes.arrayOf(PropTypes.instanceOf(Date)).isRequired,
+  weekDays: PropTypes.arrayOf(PropTypes.instanceOf(Date)).isRequired,
   currentEvents: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,

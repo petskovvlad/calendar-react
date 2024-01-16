@@ -1,42 +1,8 @@
 import React from 'react';
 import './modal.scss';
-import { isTimeValid, isEventDurationValid, isOverlap } from '@utils/formValidation.js';
-import { formatDateAndTime } from '../../utils/dateUtils';
+import { validateForm } from '@utils/formValidation.js';
 
 const Modal = ({ formData, modalHandler, handleInputChange, handleSubmit, currentEvents }) => {
-  const validateForm = () => {
-    const { startTime, endTime, date } = formData;
-
-    switch (true) {
-      case !isTimeValid(startTime) || !isTimeValid(endTime):
-        alert('The start and end times must be divisible by 15 minutes.');
-        return true;
-
-      case !isEventDurationValid(
-        formatDateAndTime(date, startTime),
-        formatDateAndTime(date, endTime),
-      ):
-        alert('The event duration cannot exceed 6 hours.');
-        return true;
-
-      case !formatDateAndTime(date, startTime).isSame(formatDateAndTime(date, endTime), 'day') ||
-        formatDateAndTime(date, endTime).isBefore(formatDateAndTime(date, startTime)):
-        alert('The event must start and end within the same day.');
-        return true;
-
-      case isOverlap(
-        formatDateAndTime(date, startTime),
-        formatDateAndTime(date, endTime),
-        currentEvents,
-      ):
-        alert('The event overlaps with existing events. Please choose another time.');
-        return true;
-
-      default:
-        return false;
-    }
-  };
-
   return (
     <div className="modal overlay">
       <div className="modal__content">
@@ -87,7 +53,7 @@ const Modal = ({ formData, modalHandler, handleInputChange, handleSubmit, curren
               className="event-form__submit-btn"
               onClick={e => {
                 e.preventDefault();
-                const hasValidationErrors = validateForm();
+                const hasValidationErrors = validateForm(formData, currentEvents);
                 if (!hasValidationErrors) {
                   handleSubmit(e);
                 }
