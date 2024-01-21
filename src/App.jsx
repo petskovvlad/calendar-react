@@ -61,14 +61,7 @@ const App = () => {
     try {
       await createEvent(eventData);
 
-      const updatedEventsData = await fetchEventList();
-
-      const formattedUpdatedEventsData = updatedEventsData.map(event => ({
-        ...event,
-        dateFrom: formatDate(event.dateFrom),
-        dateTo: formatDate(event.dateTo),
-      }));
-      setEvents(formattedUpdatedEventsData);
+      fetchData();
       setIsOpen(false);
     } catch (error) {
       alert(`Internal Server Error. Can't display events`);
@@ -85,14 +78,7 @@ const App = () => {
       }
       await deleteEvent(eventID);
 
-      const updatedEventsData = await fetchEventList();
-      const formattedUpdatedEventsData = updatedEventsData.map(event => ({
-        ...event,
-        dateFrom: formatDate(event.dateFrom),
-        dateTo: formatDate(event.dateTo),
-      }));
-
-      setEvents(formattedUpdatedEventsData);
+      fetchData();
     } catch (error) {
       alert(`Internal Server Error. Can't display events`);
     }
