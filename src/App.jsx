@@ -123,37 +123,12 @@ const App = () => {
     });
   };
 
-  const nextWeek = () => {
-    const nextWeekStartDate = new Date(weekStartDate);
-    nextWeekStartDate.setDate(nextWeekStartDate.getDate() + 7);
-    setWeekStartDate(nextWeekStartDate);
-  };
-  const prevWeek = () => {
-    const prevWeekStartDate = new Date(weekStartDate);
-    prevWeekStartDate.setDate(prevWeekStartDate.getDate() - 7);
-    setWeekStartDate(prevWeekStartDate);
-  };
-  const todayHandler = () => {
-    setWeekStartDate(getWeekStartDate(new Date()));
-  };
-
-  const startOfWeek = getWeekStartDate(new Date(weekStartDate)).toLocaleString('en-us', {
-    month: 'short',
-  });
-  const nextWeekStartDate = new Date(weekStartDate);
-  nextWeekStartDate.setDate(nextWeekStartDate.getDate() + 7);
-  const endOfWeek = nextWeekStartDate.toLocaleString('en-us', { month: 'short' });
-
-  const monthText = startOfWeek !== endOfWeek ? `${startOfWeek} - ${endOfWeek}` : startOfWeek;
-
   return (
     <>
       <Header
-        nextWeek={nextWeek}
-        prevWeek={prevWeek}
-        todayHandler={todayHandler}
         modalHandler={modalHandler}
-        monthText={monthText}
+        setWeekStartDate={setWeekStartDate}
+        weekStartDate={weekStartDate}
       />
       {isOpen && (
         <Modal
